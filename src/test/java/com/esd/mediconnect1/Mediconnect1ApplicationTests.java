@@ -1,10 +1,10 @@
-package com.esd.healthcare;
+package com.esd.mediconnect1;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class HealthcareApplicationTests {
+class Mediconnect1ApplicationTests {
 
 	@Test
 	void contextLoads() {

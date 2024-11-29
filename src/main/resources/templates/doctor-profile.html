@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Your Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #eef2f7;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 30px;
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h2 {
+            color: #2d3748;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background-color: #667eea;
+            color: white;
+            text-transform: uppercase;
+            font-size: 1rem;
+            text-align: left;
+        }
+
+        td {
+            color: #4a5568;
+            font-size: 1rem;
+        }
+
+        /* Back Link Styling */
+        .back-link {
+            display: inline-block;
+            text-decoration: none;
+            color: #667eea;
+            font-weight: bold;
+            text-align: center;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #5a67d8;
+            transform: translateY(-3px);
+        }
+
+        .back-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Your Profile</h2>
+
+        <table>
+            <tr>
+                <th>First Name</th>
+                <td th:text="${profile.firstName}"></td>
+            </tr>
+            <tr>
+                <th>Last Name</th>
+                <td th:text="${profile.lastName}"></td>
+            </tr>
+            <tr>
+                <th>Mobile</th>
+                <td th:text="${profile.mobile}"></td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td th:text="${profile.email}"></td>
+            </tr>
+        </table>
+
+        <div class="back-container">
+            <a class="back-link" th:href="${user == 'doctor'} ? @{/doctor/dashboard} : @{/patient/dashboard}">Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>

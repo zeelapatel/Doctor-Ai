@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Doctor Dashboard</title>
+    <style>
+        /* Reset some default styles */
+        body, h2, h3, p, ul, li, form, input, button, a {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* General body styling */
+        body {
+            background-color: #eef2f7;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            padding-top: 30px;
+        }
+
+        /* Container for the dashboard */
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            width: 700px;
+            max-width: 90%;
+        }
+
+        /* Headings */
+        h2 {
+            color: #333;
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            color: #444;
+            font-size: 22px;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+
+        /* Paragraph message styling */
+        p {
+            margin-bottom: 25px;
+            color: #555;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        /* Links list styling */
+        .links-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .link-item {
+            flex: 1 1 calc(45% - 10px);
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .link-item:hover {
+            background-color: #0056b3;
+            transform: translateY(-5px);
+        }
+
+        /* Notification styling */
+        .notifications {
+            margin-top: 20px;
+        }
+
+        .notification-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f9f9f9;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-left: 5px solid #007BFF;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .notification-item:hover {
+            background-color: #f1f1f1;
+        }
+
+        .notification-message {
+            flex: 1;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .notification-action {
+            margin-left: 15px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        /* Logout button styling */
+        .logout-form {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .logout-button {
+            background-color: #dc3545;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .logout-button:hover {
+            background-color: #c82333;
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Doctor Dashboard</h2>
+        <p th:text="${message}"></p>
+
+        <div class="links-list">
+            <a class="link-item" th:href="@{/doctor/patients}">Manage Patients</a>
+            <a class="link-item" th:href="@{/doctor/appointments}">Manage Appointments</a>
+            <a class="link-item" th:href="@{/doctor/patient/create}">Add New Patient</a>
+            <a class="link-item" th:href="@{/doctor/prescriptions}">Create Prescription</a>
+            <a class="link-item" th:href="@{/doctor/view-profile}">View Profile</a>
+            <a class="link-item" th:href="@{/doctor/profile/update}">update Profile</a>
+        
+        
+        
+        </div>
+
+        <h3>Notifications</h3>
+        <div class="notifications">
+            <div class="notification-item" th:each="notification : ${notifications}" th:if="${notification.status.toString() == 'UNREAD'}">
+                <span class="notification-message" th:text="${notification.message}"></span>
+                <form class="notification-action" th:action="@{/doctor/notification/read/{id}(id=${notification.id})}" method="post">
+                    <button type="submit">Mark as Read</button>
+                </form>
+            </div>
+        </div>
+
+        <form class="logout-form" th:action="@{/logout}" method="POST">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+    </div>
+</body>
+</html>

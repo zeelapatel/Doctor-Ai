@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create User</title>
+    <style>
+        /* Reset some default styles */
+        body, h2, form, label, input, select, button, a {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* General body styling */
+        body {
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Container for the form */
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        /* Heading */
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Form group styling */
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        /* Label styling */
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        /* Input and Select styling */
+        input[type="text"], input[type="password"], select {
+            width: calc(100% - 10px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        /* Button styling */
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Back link styling */
+        .back-link {
+            display: block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Create New User</h2>
+        <form th:action="@{/api/admin/create-user}" th:object="${user}" method="post">
+            <div class="form-group">
+                <label>Username:</label>
+                <input type="text" th:field="*{username}" required />
+            </div>
+            <div class="form-group">
+                <label>Password:</label>
+                <input type="password" th:field="*{password}" required />
+            </div>
+            <div class="form-group">
+                <label>Role:</label>
+                <select th:field="*{role}">
+                    <option value="ADMIN">Admin</option>
+                    <option value="DOCTOR">Doctor</option>
+                    <option value="PATIENT">Patient</option>
+                    <option value="PHARMACIST">Pharmacist</option>
+                </select>
+            </div>
+            <button type="submit">Create User</button>
+        </form>
+        <a class="back-link" href="/api/admin/dashboard">Back to Dashboard</a>
+    </div>
+</body>
+</html>

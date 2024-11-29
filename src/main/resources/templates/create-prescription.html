@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Prescription</title>
+    <style>
+        /* Reset some default styles */
+        body, h2, form, label, input, select, button, a {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* General body styling */
+        body {
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Container for the form */
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        /* Heading */
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Form group styling */
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        /* Label styling */
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        /* Input and Select styling */
+        input[type="text"], select {
+            width: calc(100% - 10px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        /* Button styling */
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Back link styling */
+        .back-link {
+            display: block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Create Prescription</h2>
+        <form th:action="@{/doctor/prescriptions/create}" method="post">
+            <div class="form-group">
+                <label for="patient">Select Patient:</label>
+                <select id="patient" name="patientId" required>
+                    <option th:each="patient : ${patients}" th:value="${patient.id}" th:text="${patient.username}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="medicine">Select Medicine:</label>
+                <select id="medicine" name="medication" required>
+                    <option th:each="medicine : ${medicines}" th:value="${medicine.name}" th:text="${medicine.name}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="dosage">Dosage:</label>
+                <input type="text" id="dosage" name="dosage" required />
+            </div>
+            <button type="submit">Create Prescription</button>
+        </form>
+        <a class="back-link" th:href="@{/doctor/dashboard}">Back to Dashboard</a>
+    </div>
+</body>
+</html>

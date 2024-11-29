@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Patient Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #eef2f7;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 30px;
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+        }
+
+        h2, h3 {
+            color: #2d3748;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 2rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 30px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: #4a5568;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        /* Navigation menu styling */
+        .nav-menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .nav-item {
+            flex: 1 1 calc(45% - 10px);
+            background-color: #667eea;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background-color: #5a67d8;
+            transform: translateY(-5px);
+        }
+
+        /* Notifications styling */
+        .notifications {
+            margin-bottom: 30px;
+        }
+
+        .notification-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f9f9f9;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-left: 5px solid #667eea;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .notification-item:hover {
+            background-color: #f1f1f1;
+        }
+
+        .notification-message {
+            flex: 1;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .notification-action {
+            margin-left: 15px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        /* Logout button styling */
+        .logout-form {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .logout-button {
+            background-color: #dc3545;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .logout-button:hover {
+            background-color: #c82333;
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Patient Dashboard</h2>
+        <p th:text="${message}"></p>
+
+        <!-- Navigation Menu -->
+        <div class="nav-menu">
+            <a class="nav-item" th:href="@{/patient/notes}">View Notes</a>
+            <a class="nav-item" th:href="@{/patient/appointment/book}">Book Appointment</a>
+            <a class="nav-item" th:href="@{/patient/appointments}">View Appointments</a>
+            <a class="nav-item" th:href="@{/patient/prescriptions}">View Prescriptions</a>
+            <a class="nav-item" th:href="@{/patient/profile/view}">View Profile</a>
+            <a class="nav-item" th:href="@{/patient/profile/update}">Update Profile</a>
+        </div>
+
+        <!-- Notifications Section -->
+        <h3>Notifications</h3>
+        <div class="notifications">
+            <div class="notification-item" th:each="notification : ${notifications}" th:if="${notification.status.toString() == 'UNREAD'}">
+                <span class="notification-message" th:text="${notification.message}"></span>
+                <form class="notification-action" th:action="@{/patient/notification/read/{id}(id=${notification.id})}" method="post">
+                    <button type="submit">Mark as Read</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Logout -->
+        <form class="logout-form" th:action="@{/logout}" method="POST">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+    </div>
+</body>
+</html>
